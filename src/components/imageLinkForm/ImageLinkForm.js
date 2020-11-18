@@ -1,5 +1,5 @@
 import React from 'react';
-const ImageLinkForm = () => {
+const ImageLinkForm = ( { inputChange } ) => {
     return ( 
         <div className="tc">
             <p className='f3'>
@@ -7,7 +7,16 @@ const ImageLinkForm = () => {
             </p>
             <form className="pa2 flex justify-center"> 
                 <div className="pa4 honeyCombPattern shadow-4">
-                  <input type="url" name="imgUrl" className="pa3"/> <button type="button" className="pa3 bg-purple white grow dib ">Detect</button>
+                    
+                  <input  onChange= { inputChange }
+                  type="url" 
+                  name="imgUrl" 
+                  className="pa3"
+                  required
+
+                /> 
+
+                  <button type="submit"  className="pa3 bg-purple white grow dib ">Detect</button>
                 </div>
                
             </form>
