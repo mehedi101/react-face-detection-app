@@ -12,11 +12,11 @@ const ImageLinkForm = ( { inputChange, btnSubmit } ) => {
                   type="url" 
                   name="imgUrl" 
                   className="pa3"
-                 
+                 required
 
                 /> 
 
-                  <button type="button"  className="pa3 bg-purple white grow dib " onClick={ btnSubmit } >Detect</button>
+                  <button type="submit"  className="pa3 bg-purple white grow dib " onClick={ btnSubmit } >Detect</button>
                 </div>
                
             </form>
