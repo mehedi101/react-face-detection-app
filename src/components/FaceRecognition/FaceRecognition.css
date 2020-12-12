@@ -1,6 +1,7 @@
 .imgArea{
     width:380px;
-    height:auto;
+	height:auto;
+	max-width:100%;
 }
 .bounding-boxes {
 	position: relative;
@@ -15,3 +16,4 @@
 	cursor: pointer;
 }
 
+#faceImg{max-width:100%; max-height:100%}
