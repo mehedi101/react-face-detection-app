@@ -1,7 +1,50 @@
 
-import React from 'react';
+import React, { Component } from 'react';
 
-export const Signin = ({onRouteChanged}) =>{
+class Signin extends Component{
+
+
+    constructor(props){
+        super(props);
+        this.state={
+            signInEmail: '',
+            signInPassword: ''
+        }
+    }
+
+    onEmailChange = (event) =>{
+        this.setState({signInEmail: event.target.value})
+    }
+
+    onPasswordChange = (event) =>{
+        this.setState({signInPassword: event.target.value})
+    }
+
+    onSubmitLogin = (event) =>{
+        event.preventDefault();
+   //     console.log(this.state);
+    //   this.props.onRouteChanged('home');
+
+
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:JSON.stringify({
+            email: this.state.signInEmail,
+            password: this.state.signInPassword
+        })
+    };
+        fetch('http://localhost:3000/login', requestOptions)
+        .then( response => response.json() )
+        .then( data => {
+            console.log(data);
+        })
+        
+        
+
+    }
+
+       render() {
 
         return (
 
@@ -11,18 +54,32 @@ export const Signin = ({onRouteChanged}) =>{
                     <legend className="f1 fw6 ph0 mh0">Sign In</legend>
                     <div className="mt3">
                         <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
-                        <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="email" name="email-address"  id="email-address"/>
+                        <input 
+                        onBlur={this.onEmailChange}
+                        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                        type="email" 
+                        name="email-address"  
+                        id="email-address"
+                        required
+                        />
                     </div>
                     <div className="mv3">
                         <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
-                        <input className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password"  id="password"/>
+                        <input 
+                        onBlur={this.onPasswordChange}
+                        className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                        type="password" 
+                        name="password"  
+                        id="password"
+                        required
+                        />
                     </div>
                   
                     </fieldset>
 
                     <div className="">
                     <input 
-                    onClick={ () => onRouteChanged('home')  }
+                    onClick={ this.onSubmitLogin}
                     className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
                     type="submit" 
                     value="Sign in"  
@@ -30,11 +87,15 @@ export const Signin = ({onRouteChanged}) =>{
                     
                     </div>
                     <div className="lh-copy mt3">
-                    <p onClick={ () => onRouteChanged('register') } className="f6 link dim black db pointer">Register</p>
+                    <p onClick={ () => this.props.onRouteChanged('register') } className="f6 link dim black db pointer">Register</p>
                 
                     </div>
                 </form>
         </main>
         )
 
+       }
+
 }
+
+export default Signin;

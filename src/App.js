@@ -3,6 +3,8 @@ import React, { Component, Fragment } from 'react';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import ImageLinkForm from './components/imageLinkForm/ImageLinkForm';
 import Navigation from './components/navigation/Navigation';
+import { Register } from './components/register/Register';
+import Signin from './components/signin/signin';
 import Rank from './components/rank/Rank';
 
 import Particles from 'react-particles-js';
@@ -10,13 +12,12 @@ import { particleOpt } from './ParticleOpt';
 import Logo from './components/logo/logo';
 import Clarifai from 'clarifai';
 import './App.css';
-import { Signin } from './components/signin/signin';
-import { Register } from './components/register/Register';
+
 
 
 const app = new Clarifai.App({
 
-  apiKey: ''
+  apiKey: 'afdd8659f9554cf7a24e1289b2e1532d'
  });
 
 
@@ -33,6 +34,14 @@ class App extends Component {
       isLoggedIn: false 
     }
   }
+
+
+  /* componentDidMount(){
+
+    fetch('http://localhost:3000')
+    .then(response => response.json())
+    .then(console.log);
+  } */
 
 
   onInputChange = (event) =>{
@@ -115,6 +124,7 @@ class App extends Component {
         </main>
         : 
         ( route === 'signin' ?  
+   
         <Signin onRouteChanged={this.onRouteChanged} /> : 
         <Register onRouteChanged={this.onRouteChanged} />
         )
