@@ -36,9 +36,14 @@ class Signin extends Component{
     };
         fetch('http://localhost:3000/login', requestOptions)
         .then( response => response.json() )
-        .then( data => {
-            console.log(data);
-        })
+        .then( user => {
+            console.log(user);
+            if(user.id) {
+                this.props.loadUser(user);
+                this.props.onRouteChanged('home');
+            }
+            
+        }).catch(err => {console.error(err)})
         
         
 
@@ -55,7 +60,7 @@ class Signin extends Component{
                     <div className="mt3">
                         <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
                         <input 
-                        onBlur={this.onEmailChange}
+                        onChange={this.onEmailChange}
                         className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                         type="email" 
                         name="email-address"  
@@ -66,7 +71,7 @@ class Signin extends Component{
                     <div className="mv3">
                         <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
                         <input 
-                        onBlur={this.onPasswordChange}
+                        onChange={this.onPasswordChange}
                         className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                         type="password" 
                         name="password"  
