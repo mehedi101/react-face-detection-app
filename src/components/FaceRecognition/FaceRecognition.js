@@ -8,7 +8,7 @@ const FaceRecognition = ({ imageUrl, box }) => {
         <div className="flex items-center justify-center ">
          
                 <div className="imgArea relative">
-                    <img id="faceImg" src={imageUrl} alt="face"  width="380px" height="auto"/>
+                    <img id="faceImg" src={imageUrl} alt="upload a faceImage"  width="380px" height="auto"/>
                         <div className="bounding-box-container absolute z-999 absolute--fill">
                                <div className="bounding-box" style={insect}  ></div>
                         </div>

@@ -6,40 +6,31 @@ import Navigation from './components/navigation/Navigation';
 import  Register from './components/register/Register';
 import Signin from './components/signin/signin';
 import Rank from './components/rank/Rank';
-
 import Particles from 'react-particles-js';
 import { particleOpt } from './ParticleOpt';
 import Logo from './components/logo/logo';
-import Clarifai from 'clarifai';
 import './App.css';
 
 
-
-const app = new Clarifai.App({
-
-  apiKey: 'afdd8659f9554cf7a24e1289b2e1532d'
- });
-
-
-
+const initialState ={ 
+  input:'',
+  imgUrl:'',
+  box: {},
+  route: 'signin',
+  isLoggedIn: false,
+  user: {
+    id:'',
+    name: '',
+    email: '',
+    rank: 0,
+    logged_in:''
+  }
+}
 class App extends Component {
 
   constructor() {
     super();
-    this.state = { 
-      input:'',
-      imgUrl:'',
-      box: {},
-      route: 'signin',
-      isLoggedIn: false,
-      user: {
-        id:'',
-        name: '',
-        email: '',
-        rank: 0,
-        logged_in:''
-      }
-    }
+    this.state = initialState
   }
 
   loadUser = (data) => {
@@ -73,16 +64,19 @@ class App extends Component {
 
   onBtnSubmit= (e) =>{
     e.preventDefault();
-//https://learn.zoner.com/wp-content/uploads/2015/06/020mm.jpg
- 
-   console.log('imageUrl', this.state.imgUrl);
 
-    app.models.predict(
-  { id: 'd02b4508df58432fbb84e800597b8959'}, this.state.input
-    )
+    // Call Clarify API for face detection
+    fetch('http://localhost:3000/imageUrl',{
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:JSON.stringify({
+        input: this.state.input
+      })
+    })
+    .then(response => response.json())
     .then(response =>  {
-
       if(response){
+        // call for update rank 
         fetch('http://localhost:3000/image', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -98,7 +92,7 @@ class App extends Component {
         .catch(err => console.error(err))
 
       }
-
+      // displayFaceBox over image. 
       this.displayFaceBox( this.calculateBoxArea(response) )
 
 
@@ -121,7 +115,7 @@ class App extends Component {
 
     };
   }
-
+  
   displayFaceBox = (box) => {
 
     console.log('box_area', box);
@@ -132,7 +126,7 @@ class App extends Component {
   onRouteChanged = (route) => {
 
     if(route === 'signin' || route === 'register') { 
-      this.setState({ isLoggedIn: false }) ;
+      this.setState(initialState) ;
 
     }else if(route === 'home') {
       this.setState({ isLoggedIn: true}) ;
